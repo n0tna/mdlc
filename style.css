@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+canvas {
+  background: #FDFCF9;
+
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+}
+
+h1 {
+  padding-left: 1em;
+  position: absolute;
+  width: 394px;
+  height: 55px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 58px;
+
+  color: #000000;
+}
