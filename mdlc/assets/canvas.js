@@ -51,16 +51,6 @@ class Imagez {
 
     update = () => {
 
-    //     if (this.x + (this.img.width / 2) >= window.innerWidth
-    //     || this.x - (this.img.width / 2) <= 0) {
-    //         this.x -= (this.targetX - this.x) * 0.05;
-    //   }
-  
-    //   if (this.y + (this.img.width / 2) >= window.innerHeight
-    //     || this.y - (this.img.width / 2) <= 0) {
-    //         this.y -= (this.targetY - this.y) * 0.05;
-    //   }
-
         let xCenter = this.x + this.img.width*this.zoom / 2;
         let yCenter = this.y + this.img.height*this.zoom / 2;
         let distance = getDistance(xCenter-panX, yCenter-panY, mouse.x, mouse.y);
@@ -114,7 +104,6 @@ function panUpdate() {
 
     ctx.translate(-panX, -panY);
 
-
     imgArray.forEach(image => {
         image.draw();
     });
@@ -157,11 +146,8 @@ img5 = new Imagez((canvas.width*0.60)-widthGap, (canvas.height*0.5)-heightGap, 0
 img6 = new Imagez((canvas.width*0.60)-widthGap, (canvas.height*0.9)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_Crayon2_S.jpg')
 img7 = new Imagez((canvas.width*0.45)-widthGap, (canvas.height*0.98)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_TheOdeTo3_S.jpg')
 let imgArray = [img1,img2,img3,img4,img5,img6,img7];
-console.log(panX);
 
 panUpdate();
 
-
 var newPercentX = 0, newPercentY = 0;
 var percentX = 0, percentY = 0;
-
