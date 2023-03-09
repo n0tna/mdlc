@@ -51,20 +51,17 @@ class Imagez {
 
     update = () => {
 
-        let xCenter = this.x + this.img.width*this.zoom / 2;
-        let yCenter = this.y + this.img.height*this.zoom / 2;
+        let xCenter = this.originalX + this.img.width*this.originalZoom / 2;
+        let yCenter = this.originalY + this.img.height*this.originalZoom / 2;
         let distance = getDistance(xCenter-panX, yCenter-panY, mouse.x, mouse.y);
-        ctx.fillRect(xCenter,yCenter,1,1);
 
         if (distance < this.img.width / 4 || distance < this.img.height / 4) {
             let newZoom = 1 + (this.img.width / 4 - distance) / (this.img.width / 4) * this.originalZoom;
             let newWidth = this.img.width * newZoom;
             let newHeight = this.img.height * newZoom;
-            let widthDiff = (newWidth - this.img.width) / 2;
-            let heightDiff = (newHeight - this.img.height) / 2;
             this.targetZoom = newZoom;
-            this.targetX = this.x - widthDiff;
-            this.targetY = this.y - heightDiff;
+            this.targetX = xCenter - newWidth / 2;
+            this.targetY = yCenter - newHeight / 2;
             if (closestIndex === -1 || distance < getDistance(
                 imgArray[closestIndex].x + imgArray[closestIndex].img.width / 2, 
                 imgArray[closestIndex].y + imgArray[closestIndex].img.height / 2, 
@@ -119,16 +116,6 @@ function panUpdate() {
         closestIndex = -1;
     }
 }
-
-
-// for (let i = 0; i < 20; i++) {
-//     let zoom = 0.5;
-//     let x = Math.random() * window.innerWidth;
-//     let y = Math.random() * window.innerHeight;
-//     let imgSrc = 'IMG_1566.jpg';
-//     imgArray.push(new Imagez(x, y, zoom, imgSrc));
-// };
-
 
 function animate() {
     requestAnimationFrame(animate);
