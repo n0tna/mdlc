@@ -12,9 +12,23 @@ let mouse = {
 }
 
 let closestIndex = -1;
+
 window.addEventListener('mousemove', function (e) {
     mouse.x = e.x;
     mouse.y = e.y;
+});
+
+canvas.addEventListener('click', function(e) {
+    for (let i = 0; i < imgArray.length; i++) {
+        const image = imgArray[i];
+        const x = image.x - panX;
+        const y = image.y - panY;
+        const w = image.img.width * image.zoom;
+        const h = image.img.height * image.zoom;
+        if (e.clientX >= x && e.clientX <= x + w && e.clientY >= y && e.clientY <= y + h) {
+            console.log(image.img.currentSrc);
+        }
+    }
 });
 
 function lerp(start, end, percent) {
