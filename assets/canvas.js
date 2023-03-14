@@ -5,7 +5,7 @@ let width = canvas.width = window.innerWidth;
 let height = canvas.height = window.innerHeight;
 let panX = 0, panY = 0;
 console.log(height);
-const scaleBorderFactor = 1.6; /* scale factor for the bounds */
+const scaleBorderFactor = 1.7; /* scale factor for the bounds */
 let mouse = {
     x: width / 2, // set to half of the width of the screen
     y: height / 2 // set to half of the height of the screen
@@ -69,8 +69,8 @@ class Imagez {
         let yCenter = this.originalY + this.img.height*this.originalZoom / 2;
         let distance = getDistance(xCenter-panX, yCenter-panY, mouse.x, mouse.y);
 
-        if (distance < this.img.width / 4 || distance < this.img.height / 4) {
-            let newZoom = 1 + (this.img.width / 4 - distance) / (this.img.width / 4) * this.originalZoom;
+        if (distance < this.img.width / 2 || distance < this.img.height / 2) {
+            let newZoom = 1 + (this.img.width / 2 - distance*3) / (this.img.width / 2) * this.originalZoom;
             let newWidth = this.img.width * newZoom;
             let newHeight = this.img.height * newZoom;
             this.targetZoom = newZoom;
@@ -115,6 +115,13 @@ function panUpdate() {
 
     ctx.translate(-panX, -panY);
 
+    if (closestIndex !== -1) {
+        const closestImage = imgArray[closestIndex];
+        imgArray.splice(closestIndex, 1);
+        imgArray.push(closestImage);
+        closestIndex = -1;
+    }
+
     imgArray.forEach(image => {
         image.draw();
     });
@@ -123,12 +130,6 @@ function panUpdate() {
 
     requestAnimationFrame(panUpdate);
     
-    if (closestIndex !== -1) {
-        const closestImage = imgArray[closestIndex];
-        imgArray.splice(closestIndex, 1);
-        imgArray.push(closestImage);
-        closestIndex = -1;
-    }
 }
 
 function animate() {
@@ -147,7 +148,6 @@ img5 = new Imagez((canvas.width*0.60)-widthGap, (canvas.height*0.5)-heightGap, 0
 img6 = new Imagez((canvas.width*0.60)-widthGap, (canvas.height*0.9)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_Crayon2_S.jpg')
 img7 = new Imagez((canvas.width*0.45)-widthGap, (canvas.height*0.98)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_TheOdeTo3_S.jpg')
 let imgArray = [img1,img2,img3,img4,img5,img6,img7];
-
 panUpdate();
 
 var newPercentX = 0, newPercentY = 0;
