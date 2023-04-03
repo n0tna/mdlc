@@ -7,16 +7,18 @@ let panX = 0, panY = 0;
 console.log(height);
 const scaleBorderFactor = 1.7; /* scale factor for the bounds */
 let mouse = {
-    x: width / 2, // set to half of the width of the screen
-    y: height / 2 // set to half of the height of the screen
+    x: 0,
+    y: 0
 }
 
 let closestIndex = -1;
 
 window.addEventListener('mousemove', function (e) {
-    mouse.x = e.x;
-    mouse.y = e.y;
-});
+    if (e.clientX >= 0 && e.clientX <= window.innerWidth && e.clientY >= 0 && e.clientY <= window.innerHeight) {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    }
+  });
 
 canvas.addEventListener('click', function(e) {
     for (let i = 0; i < imgArray.length; i++) {
@@ -27,6 +29,7 @@ canvas.addEventListener('click', function(e) {
         const h = image.img.height * image.zoom;
         if (e.clientX >= x && e.clientX <= x + w && e.clientY >= y && e.clientY <= y + h) {
             console.log(image.img.currentSrc);
+            window.location.href = 'the-ode-to';
         }
     }
 });
@@ -140,14 +143,86 @@ function animate() {
     });
 };
 
-img1 = new Imagez((canvas.width*0.1)-widthGap, (canvas.height*0.2)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_Budgie1_S.jpg')
-img2 = new Imagez((canvas.width*0.42)-widthGap, (canvas.height*0.05)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_Domino1_S.jpg')
-img3 = new Imagez((canvas.width*0.33)-widthGap, (canvas.height*0.5)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_Budige2_S.jpg')
-img4 = new Imagez((canvas.width*0.27)-widthGap, (canvas.height*0.8)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_Cervera1_S.jpg')
-img5 = new Imagez((canvas.width*0.60)-widthGap, (canvas.height*0.5)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_Crayon1_S.jpg')
-img6 = new Imagez((canvas.width*0.60)-widthGap, (canvas.height*0.9)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_Crayon2_S.jpg')
-img7 = new Imagez((canvas.width*0.45)-widthGap, (canvas.height*0.98)-heightGap, 0.3, 'assets/IMG/MariaDeLaCroix_Stillife_TheOdeTo3_S.jpg')
-let imgArray = [img1,img2,img3,img4,img5,img6,img7];
+
+let budgie1 = {
+    x: canvas.width * 0.1 - widthGap,
+    y: canvas.height * 0.2 - heightGap,
+    zoom: 0.3,
+    imgSrc: 'assets/IMG/MariaDeLaCroix_Stillife_Budgie1_S.jpg',
+    title: 'Budgie 1',
+    path: 'budgie1'
+  };
+  
+  let domino1 = {
+    x: canvas.width * 0.42 - widthGap,
+    y: canvas.height * 0.17 - heightGap,
+    zoom: 0.3,
+    imgSrc: 'assets/IMG/MariaDeLaCroix_Stillife_Domino1_S.jpg',
+    title: 'Domino 1',
+    path: 'domino1'
+  };
+  
+  let budige2 = {
+    x: canvas.width * 0.33 - widthGap,
+    y: canvas.height * 0.5 - heightGap,
+    zoom: 0.3,
+    imgSrc: 'assets/IMG/MariaDeLaCroix_Stillife_Budige2_S.jpg',
+    title: 'Budgie 2',
+    path: 'budgie2'
+  };
+  
+  let cervera1 = {
+    x: canvas.width * 0.27 - widthGap,
+    y: canvas.height * 0.8 - heightGap,
+    zoom: 0.3,
+    imgSrc: 'assets/IMG/MariaDeLaCroix_Stillife_Cervera1_S.jpg',
+    title: 'Cervera 1',
+    path: 'cervera1'
+  };
+  
+  let crayon1 = {
+    x: canvas.width * 0.60 - widthGap,
+    y: canvas.height * 0.5 - heightGap,
+    zoom: 0.3,
+    imgSrc: 'assets/IMG/MariaDeLaCroix_Stillife_Crayon1_S.jpg',
+    title: 'Crayon 1',
+    path: 'crayon1'
+  };
+  
+  let crayon2 = {
+    x: canvas.width * 0.60 - widthGap,
+    y: canvas.height * 0.9 - heightGap,
+    zoom: 0.3,
+    imgSrc: 'assets/IMG/MariaDeLaCroix_Stillife_Crayon2_S.jpg',
+    title: 'Crayon 2',
+    path: 'crayon2'
+  };
+  
+  let theOdeTo3 = {
+    x: canvas.width * 0.45 - widthGap,
+    y: canvas.height * 0.98 - heightGap,
+    zoom: 0.3,
+    imgSrc: 'assets/IMG/MariaDeLaCroix_Stillife_TheOdeTo3_S.jpg',
+    title: 'The Ode to 3',
+    path: 'theOdeTo3'
+  };
+  
+  let stillife1 = {
+    x: canvas.width * 0.80 - widthGap,
+    y: canvas.height * 0.24 - heightGap,
+    zoom: 0.3,
+    imgSrc: 'assets/IMG/MariaDeLaCroix_Stillife1_S.jpg',
+    title: 'Still Life 1',
+    path: 'stillife1'
+  };
+let images = [budgie1,domino1,budige2,cervera1,crayon1,crayon2,theOdeTo3,stillife1];
+let imgArray = [];
+for (let i = 0; i < images.length; i++) {
+    let budgie = images[i];
+    let budgieImage = new Imagez(budgie.x, budgie.y, budgie.zoom, budgie.imgSrc);
+    imgArray.push(budgieImage);
+ }
+
 panUpdate();
 
 var newPercentX = 0, newPercentY = 0;
