@@ -29,7 +29,7 @@ canvas.addEventListener('click', function(e) {
         const h = image.img.height * image.zoom;
         if (e.clientX >= x && e.clientX <= x + w && e.clientY >= y && e.clientY <= y + h) {
             console.log(image.img.currentSrc);
-            window.location.href = 'the-ode-to';
+            window.location.href = 'the-ode-to.html';
         }
     }
 });
