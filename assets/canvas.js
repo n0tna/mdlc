@@ -11,8 +11,17 @@ let panX = 0, panY = 0;
 let mouse = { x: 0, y: 0 };
 let closestIndex = -1;
 
-window.addEventListener('mousemove', (e) => {
-  if (e.clientX >= 0 && e.clientX <= window.innerWidth && e.clientY >= 0 && e.clientY <= window.innerHeight) {
+canvas.addEventListener("mouseenter", function (e) {
+  mouse.mouseInside = true;
+  mouseEntered = true;
+});
+
+canvas.addEventListener("mouseleave", function (e) {
+  mouse.mouseInside = false;
+});
+
+canvas.addEventListener("mousemove", function (e) {
+  if (mouse.mouseInside) {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
   }
