@@ -7,9 +7,11 @@ const scaleBorderFactor = 1.7;
 const widthGap = (canvas.width * scaleBorderFactor - canvas.width) / 2;
 const heightGap = (canvas.height * scaleBorderFactor - canvas.height) / 2;
 
-let panX = 0, panY = 0;
-let mouse = { x: 0, y: 0 };
+let panX = 0;
+let panY = 0;
+let mouse = { x: -500, y: -500 };
 let closestIndex = -1;
+let mouseEntered = false;
 
 canvas.addEventListener("mouseenter", function (e) {
   mouse.mouseInside = true;
@@ -101,29 +103,31 @@ class Imagez {
 }
 
 function panUpdate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.save();
+  if (mouseEntered) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
 
-  const newPercentX = mouse.x / canvas.width;
-  const newPercentY = mouse.y / canvas.height;
+    const newPercentX = mouse.x / canvas.width;
+    const newPercentY = mouse.y / canvas.height;
 
-  panX = lerp(panX, widthGap * newPercentX - widthGap * (1 - newPercentX), 0.05);
-  panY = lerp(panY, heightGap * newPercentY - heightGap * (1 - newPercentY), 0.05);
+    panX = lerp(panX, widthGap * newPercentX - widthGap * (1 - newPercentX), 0.05);
+    panY = lerp(panY, heightGap * newPercentY - heightGap * (1 - newPercentY), 0.05);
 
-  ctx.translate(-panX, -panY);
+    ctx.translate(-panX, -panY);
 
-  if (closestIndex !== -1) {
-    const closestImage = imgArray[closestIndex];
-    imgArray.splice(closestIndex, 1);
-    imgArray.push(closestImage);
-    closestIndex = -1;
+    if (closestIndex !== -1) {
+      const closestImage = imgArray[closestIndex];
+      imgArray.splice(closestIndex, 1);
+      imgArray.push(closestImage);
+      closestIndex = -1;
+    }
   }
+    imgArray.forEach(image => {
+      image.draw();
+    });
 
-  imgArray.forEach(image => {
-    image.draw();
-  });
+    ctx.restore();
 
-  ctx.restore();
 
   requestAnimationFrame(panUpdate);
 }
